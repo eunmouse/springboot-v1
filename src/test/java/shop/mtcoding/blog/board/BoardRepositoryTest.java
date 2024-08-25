@@ -49,6 +49,14 @@ public class BoardRepositoryTest {
 //        }
     }
 
+//    @Test
+//    public void findByIdV2_test() {
+//        int id = 1;
+//
+//        Board board = boardRepository.findByIdV2(id);
+//        System.out.println(board.getUser().getUsername());
+//    }
+
     @Test
     public void findById_test() {
         // given -> 가짜로 아이디를 만들어 테스트
@@ -73,15 +81,22 @@ public class BoardRepositoryTest {
         // given
 
         // when
+        System.out.println("1. 첫번째 조회");
         List<Board> boardList = boardRepository.findAll();
+        System.out.println("userId : " + boardList.get(0).getUser().getId());
+        System.out.println("=======================");
         // eye
-        System.out.println("사이즈 : " + boardList.size());
-
-        for (Board board : boardList) {
-            System.out.println(board.getId());
-            System.out.println(board.getTitle());
-            System.out.println(board.getContent());
-        }
+//        System.out.println("사이즈 : " + boardList.size());
+        System.out.println("2. 레이지 로딩");
+        System.out.println("title : " + boardList.get(0).getUser().getUsername());
+        System.out.println("title : " + boardList.get(3).getUser().getUsername());
+        System.out.println("title : " + boardList.get(4).getUser().getUsername());
+//        for (Board board : boardList) {
+//            System.out.println(board.getId());
+//            System.out.println(board.getTitle());
+//            System.out.println(board.getContent());
+//            //System.out.println(board.getUser().getId());
+//        }
     }
 
     @Test // 테스트 메서드에는 매개변수를 사용할 수 없다.
@@ -91,7 +106,7 @@ public class BoardRepositoryTest {
         String content = "내용1";
 
         // when
-        boardRepository.save(title, content);
+//        boardRepository.save(board);
 
         // eye (눈으로 확인)
     }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.user.User;
 
 import java.sql.Timestamp;
 
@@ -22,13 +24,21 @@ public class Board {
     private String title;
     @Column(nullable = false)
     private String content;
+
+    @CreationTimestamp
     private Timestamp createdAt;
 
+    // fk
+    // N:1 (Board:User)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user; // JPA 는 Integer user_id 가 아니라 오브젝트 타입을 적는다.
+
     @Builder
-    public Board(Integer id, String title, String content, Timestamp createdAt) {
+    public Board(Integer id, String title, String content, Timestamp createdAt, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdAt = createdAt;
+        this.user = user;
     }
 }
