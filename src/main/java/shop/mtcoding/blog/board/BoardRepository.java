@@ -5,6 +5,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import shop.mtcoding.blog.core.error.Exception404;
 
 import java.util.List;
 
@@ -61,8 +62,9 @@ public class BoardRepository { // heap 에 올려서 new 되는거
             Board board = (Board) query.getSingleResult(); // 1개의 데이터니까
             return board;
         } catch (Exception e) {
+            e.printStackTrace();
             // exception 을 내가 잡은 것 까지 배움 - 처리 방법은 V2 에서 배우기
-            throw new RuntimeException("게시글 id를 찾을 수 없습니다.");
+            throw new Exception404("게시글 id를 찾을 수 없습니다.");
         }
     }
 

@@ -13,6 +13,19 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
+    public void findByUsername_test() {
+        // given
+        String username = "haha";
+        // when
+        User user = userRepository.findByUsername(username);
+        // eye
+//        System.out.println(user.getUsername());
+//        System.out.println(user.getPassword());
+//        System.out.println(user.getEmail());
+        System.out.println("user = " + user);
+    }
+
+    @Test
     public void findByUsernameAndPassword_test() {
         // given
         String username = "ssar";

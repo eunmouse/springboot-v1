@@ -5,6 +5,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import shop.mtcoding.blog.core.error.Exception401;
 
 @RequiredArgsConstructor
 @Repository
@@ -14,14 +15,31 @@ public class UserRepository {
 //    @Autowired
 //    private EntityManager em;
 
+    public User findByUsername(String username) { // UserService 에서 왔슴
+        Query query = em.createQuery("select u from User u where u.username=:username", User.class);
+        query.setParameter("username", username);
+        try {
+            User user = (User) query.getSingleResult();
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public User findByUsernameAndPassword(String username, String password) {
         // 조회커리 만들거임
         // JPQL 은 ? 가 없어서 : 쓴다. user 만 select 한거니, 오브젝트매핑됨(오브젝트릴레이션매핑아님)
         Query query = em.createQuery("select u from User u where u.username=:username and u.password=:password", User.class);
         query.setParameter("username", username);
         query.setParameter("password", password);
-        User user = (User) query.getSingleResult();
-        return user;
+
+        try {
+            User user = (User) query.getSingleResult();
+            return user;
+        } catch (Exception e) {
+            throw new Exception401("인증되지 않았습니다.");  // e.getMessage 하면 안됨, e.getMessage 는 서버측에만 기록해야한다.
+        }
+
     }
 
     @Transactional

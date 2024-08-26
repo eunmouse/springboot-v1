@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller // 화면 연결이 먼저 되어야 한다.
 public class UserController {
 
-    private final UserRepository userRepository;
+    // private final UserRepository userRepository;
     private final HttpSession session;
+    private final UserService userService;
 
 //    @Autowired // IoC 에 있으니까 오토와이어드만 하면 됨 힛
 //    private HttpSession session;
@@ -35,7 +36,8 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO loginDTO) {
-        User sessionUser = userRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+        // User sessionUser = userRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+        User sessionUser = userService.로그인(loginDTO);
         session.setAttribute("sessionUser", sessionUser); // 락카에 담아
         return "redirect:/board";
     }
@@ -43,7 +45,8 @@ public class UserController {
     //두번째 전략, 클래스로 받는 것
     @PostMapping("/join") // 핵심로직 먼저 짜고, 부가적인거 나중에 짜자
     public String join(UserRequest.JoinDTO joinDTO) {
-        userRepository.save(joinDTO.toEntity());
+        // userRepository.save(joinDTO.toEntity());
+        userService.회원가입(joinDTO);
         return "redirect:/login-form";
     }
 

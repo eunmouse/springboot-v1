@@ -18,6 +18,7 @@ public class BoardController {
 
     private final BoardRepository boardRepository;
     private final HttpSession session;
+    private final BoardService boardService;
 
 //    @Autowired
 //    private BoardRepository boardRepository;
@@ -64,6 +65,8 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO saveDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+
+        saveDTO.setContent(saveDTO.getContent().replace("<", "&lt"));
 
         // 인증 체크 필요함
         if (sessionUser == null) {
